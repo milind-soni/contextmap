@@ -6,21 +6,23 @@ interface Message {
 }
 
 interface SendMessageOptions {
-  apiKey: string;
   messages: Message[];
   model: string;
 }
 
 export async function sendMessage(options: SendMessageOptions): Promise<string> {
-  const { apiKey, messages, model } = options;
+  const { messages, model } = options;
 
-  const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+  console.log('Sending to OpenRouter via proxy:', {
+    model,
+    messageCount: messages.length
+  });
+
+  // Use local Vite proxy endpoint which adds the API key server-side
+  const response = await fetch('/api/openrouter/chat/completions', {
     method: 'POST',
     headers: {
-      'Authorization': `Bearer ${apiKey}`,
       'Content-Type': 'application/json',
-      'HTTP-Referer': typeof window !== 'undefined' ? window.location.origin : '',
-      'X-Title': 'ContextMap'
     },
     body: JSON.stringify({
       model,
@@ -28,11 +30,20 @@ export async function sendMessage(options: SendMessageOptions): Promise<string> 
     })
   });
 
+  console.log('OpenRouter response:', response.status, response.statusText);
+
   if (!response.ok) {
-    const error = await response.json().catch(() => ({ error: response.statusText }));
-    throw new Error(error.error?.message || error.error || 'API request failed');
+    const errorText = await response.text();
+    console.error('OpenRouter API error:', response.status, errorText);
+    try {
+      const error = JSON.parse(errorText);
+      throw new Error(error.error?.message || error.message || `API Error ${response.status}: ${errorText}`);
+    } catch (e) {
+      throw new Error(`API Error ${response.status}: ${errorText || response.statusText}`);
+    }
   }
 
   const data = await response.json();
-  return data.choices[0].message.content;
+  console.log('OpenRouter success:', data);
+  return data.choices[0]?.message?.content || 'No response from API';
 }

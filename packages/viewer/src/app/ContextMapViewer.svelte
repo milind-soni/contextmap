@@ -33,15 +33,11 @@
       text?: string | null;
       projection: { x: string; y: string };
     };
-    openRouterApiKey: string;
   }
 
   let props = $state<ContextMapProps | undefined>(undefined);
   let describe: { column_name: string; column_type: string }[] = $state.raw([]);
   let hashParams = $state.raw<{ data?: string; settings?: any }>({});
-
-  // Get API key from environment
-  const openRouterApiKey = import.meta.env.VITE_OPENROUTER_API_KEY;
 
   async function loadHashParams() {
     hashParams = {
@@ -133,14 +129,19 @@
         projectionColumns = { x, y };
       }
 
+      // Validate that we have projection columns
+      if (!projectionColumns) {
+        logger.error("No projection columns specified. Please configure X and Y columns.");
+        return;
+      }
+
       props = {
         data: {
           table: "dataset",
           id: "__row_index__",
           text: spec.text,
-          projection: projectionColumns!,
+          projection: projectionColumns,
         },
-        openRouterApiKey: openRouterApiKey || "",
       };
     } catch (e: unknown) {
       logger.exception(e);

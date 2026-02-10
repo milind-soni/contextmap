@@ -14,12 +14,10 @@
   let {
     messages = $bindable([]),
     context,
-    apiKey,
     onMessagesChange
   }: {
     messages: Message[];
     context: ContextData | null;
-    apiKey: string;
     onMessagesChange?: (messages: Message[]) => void;
   } = $props();
 
@@ -41,7 +39,6 @@
         : 'You are a helpful assistant.';
 
       const response = await sendMessage({
-        apiKey,
         messages: [
           { role: 'system', content: systemPrompt },
           ...messages.filter(m => m.role !== 'error')
