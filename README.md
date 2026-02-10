@@ -1,4 +1,4 @@
-# ContextMap
+# ContextCanvas
 
 **Visual Context Management Tool** - An interactive map-based interface for visualizing and managing AI context, built on [Apple's Embedding Atlas](https://github.com/apple/embedding-atlas).
 
@@ -6,7 +6,7 @@
 
 ## Vision
 
-ContextMap transforms how you manage context for AI applications. Instead of managing context as linear text or flat lists, ContextMap lets you:
+ContextCanvas transforms how you manage context for AI applications. Instead of managing context as linear text or flat lists, ContextCanvas lets you:
 
 - 🗺️ **Visualize context spatially** - See all your context laid out on an interactive 2D map
 - ✏️ **Draw and annotate** - Create shapes, regions, and annotations to organize context
@@ -37,7 +37,7 @@ Built on Apple's Embedding Atlas foundation:
 - UMAP dimensionality reduction
 - Sentence transformers for embeddings
 
-**Extensions (ContextMap-specific):**
+**Extensions (ContextCanvas-specific):**
 - Custom annotation system
 - Context priority weighting
 - Shape-based context grouping
@@ -51,7 +51,7 @@ Built on Apple's Embedding Atlas foundation:
 pip install -e packages/backend
 
 # Visualize your context data
-contextmap <your-context-data.parquet>
+contextcanvas <your-context-data.parquet>
 ```
 
 ### Option 2: Jupyter Widget
@@ -83,7 +83,7 @@ import { EmbeddingAtlas, EmbeddingView, Table } from "embedding-atlas/svelte";
 ## Project Structure
 
 ```
-contextmap/
+contextcanvas/
 ├── packages/
 │   ├── component/              # Core rendering components
 │   ├── table/                  # Table component for context items
@@ -151,7 +151,7 @@ For detailed development instructions, see the [development guide](https://apple
 
 ## Credits
 
-ContextMap is built on [Apple's Embedding Atlas](https://github.com/apple/embedding-atlas), an excellent tool for embedding visualization.
+ContextCanvas is built on [Apple's Embedding Atlas](https://github.com/apple/embedding-atlas), an excellent tool for embedding visualization.
 
 Original Embedding Atlas authors:
 - Donghao Ren

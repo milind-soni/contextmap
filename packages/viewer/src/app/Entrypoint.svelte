@@ -5,7 +5,7 @@
   import BackendViewer from "./BackendViewer.svelte";
   import FileViewer from "./FileViewer.svelte";
   import TestDataViewer from "./TestDataViewer.svelte";
-  import ContextMapViewer from "./ContextMapViewer.svelte";
+  import ContextCanvasViewer from "./ContextCanvasViewer.svelte";
 
   import { resolveAppConfig } from "./app_config.js";
 
@@ -13,7 +13,7 @@
 
   const routes: any = {
     "/": config.home == "file-viewer" ? FileViewer : BackendViewer,
-    "/contextmap": ContextMapViewer,
+    "/contextcanvas": ContextCanvasViewer,
   };
 
   if (import.meta.env.DEV) {
